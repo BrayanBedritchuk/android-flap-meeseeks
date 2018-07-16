@@ -3,7 +3,7 @@ package br.com.sailboat.flappymeeseeks
 import android.content.Context
 import android.graphics.Canvas
 
-class Pipes(val context: Context) : GameComponent {
+class Pipes(val context: Context, val score: Score) : GameComponent {
 
     private val AMOUNT_OF_PIPES = 5
     private val DISTANCE_BETWEEN_PIPES = 200
@@ -30,6 +30,7 @@ class Pipes(val context: Context) : GameComponent {
             pipe.moveToLeft()
 
             if (pipe.isOutOfScreen()) {
+                score.increaseScore()
                 iterator.remove()
                 val pipe = Pipe(context, getMaxPosition() + DISTANCE_BETWEEN_PIPES)
                 iterator.add(pipe)
@@ -42,6 +43,15 @@ class Pipes(val context: Context) : GameComponent {
         pipes.forEach { max = Math.max(it.position, max) }
 
         return max
+    }
+
+    fun hasCollisionWithMeeseeks(meeseeks: Meeseeks): Boolean {
+        pipes.forEach {
+            if (it.hasHorizontalCollision(meeseeks) && it.hasVerticalCollision(meeseeks)) {
+                return true
+            }
+        }
+        return false
     }
 
 

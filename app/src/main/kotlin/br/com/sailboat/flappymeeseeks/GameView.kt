@@ -12,7 +12,8 @@ class GameView(context: Context) : SurfaceView(context), Runnable, View.OnTouchL
     private val TAG = GameView::class.simpleName
     private var isRunning = true
     private val meeseeks = Meeseeks(context)
-    private var pipes = Pipes(context)
+    private var score = Score()
+    private var pipes = Pipes(context, score)
     private val background: Bitmap
 
     init {
@@ -34,8 +35,18 @@ class GameView(context: Context) : SurfaceView(context), Runnable, View.OnTouchL
             canvas.drawBitmap(background, 0f, 0f, null)
             meeseeks.draw(canvas)
             meeseeks.goDown()
+
             pipes.draw(canvas)
             pipes.moveToLeft()
+
+            score.draw(canvas)
+
+
+            if (CollisionValidator(meeseeks, pipes).hasCollisionOccurred()) {
+                isRunning = false
+                GameOverView(context).draw(canvas)
+            }
+
 
             holder.unlockCanvasAndPost(canvas)
         }

@@ -18,14 +18,14 @@ class Meeseeks(val context: Context) : GameComponent {
         if (hasReachedBottomLimit()) {
             return
         }
-        height += 5
+        height += Screen.dpToPx(3).toFloat()
     }
 
     fun goUp() {
         if (hasReachedTopLimit()) {
             return
         }
-        height -= 150
+        height -= Screen.dpToPx(50).toFloat()
     }
 
     private fun hasReachedTopLimit() = (height + RADIUS) < 0

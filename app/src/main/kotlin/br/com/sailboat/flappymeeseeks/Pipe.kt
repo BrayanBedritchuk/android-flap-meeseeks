@@ -44,10 +44,17 @@ class Pipe(val context: Context, var position: Float) : GameComponent {
         position -= 5
     }
 
+    fun hasHorizontalCollision(meeseeks: Meeseeks): Boolean {
+        return position < (meeseeks.WIDTH + meeseeks.RADIUS)
+    }
+
+    fun hasVerticalCollision(meeseeks: Meeseeks): Boolean {
+        return ((meeseeks.height - meeseeks.RADIUS) < topPipeHeight) ||
+                ((meeseeks.height + meeseeks.RADIUS) > bottomPipeHeight)
+    }
+
     fun isOutOfScreen() = (position + WIDTH) < 0
 
     private fun randomValue() = (Math.random() * 150).toInt()
-
-
 
 }
