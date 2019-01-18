@@ -2,7 +2,7 @@ package br.com.sailboat.flappymeeseeks
 
 import android.graphics.Canvas
 
-class Score : GameComponent {
+class Score(val som: Som) : GameComponent {
 
     var score = 0
 
@@ -12,6 +12,7 @@ class Score : GameComponent {
 
     fun increaseScore() {
         score++
+        som.tocarSomDePonto()
     }
 
 }

@@ -11,8 +11,9 @@ class GameView(context: Context) : SurfaceView(context), Runnable, View.OnTouchL
 
     private val TAG = GameView::class.simpleName
     private var isRunning = true
-    private val meeseeks = Meeseeks(context)
-    private var score = Score()
+    private val som = Som(context)
+    private val meeseeks = Meeseeks(context, som)
+    private var score = Score(som)
     private var pipes = Pipes(context, score)
     private val background: Bitmap
 
@@ -45,6 +46,7 @@ class GameView(context: Context) : SurfaceView(context), Runnable, View.OnTouchL
             if (CollisionValidator(meeseeks, pipes).hasCollisionOccurred()) {
                 isRunning = false
                 GameOverView(context).draw(canvas)
+                som.tocarSomDeColisao()
             }
 
 

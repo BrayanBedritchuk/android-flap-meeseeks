@@ -25,4 +25,14 @@ object Screen {
         return (px / Resources.getSystem().displayMetrics.density).toInt()
     }
 
+    fun getWidth(context: Context): Int {
+        val manager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = manager.defaultDisplay
+        val displayMetrics = DisplayMetrics()
+
+        display.getMetrics(displayMetrics)
+
+        return displayMetrics.widthPixels
+    }
+
 }

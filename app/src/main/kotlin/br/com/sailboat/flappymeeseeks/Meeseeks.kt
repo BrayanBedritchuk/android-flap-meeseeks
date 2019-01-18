@@ -1,17 +1,24 @@
 package br.com.sailboat.flappymeeseeks
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 
-class Meeseeks(val context: Context) : GameComponent {
+class Meeseeks(val context: Context, val som: Som) : GameComponent {
 
     val WIDTH = 50f
-    val RADIUS = 50f
-    val COLOR = ColorHelper.getMeeseeksColor()
+    val RADIUS = 50
     var height = 50f
+    val imgMeesseeks: Bitmap
+
+    init {
+        val bitmapMeesseeks = BitmapFactory.decodeResource(context.resources, R.drawable.passaro)
+        imgMeesseeks = Bitmap.createScaledBitmap(bitmapMeesseeks,RADIUS * 2, RADIUS * 2, false )
+    }
 
     override fun draw(canvas: Canvas) {
-        canvas.drawCircle(WIDTH, height, RADIUS, COLOR)
+        canvas.drawBitmap(imgMeesseeks, WIDTH - RADIUS, height - RADIUS, null)
     }
 
     fun goDown() {
@@ -26,6 +33,7 @@ class Meeseeks(val context: Context) : GameComponent {
             return
         }
         height -= Screen.dpToPx(50).toFloat()
+        som.tocarSomDePulo()
     }
 
     private fun hasReachedTopLimit() = (height + RADIUS) < 0
